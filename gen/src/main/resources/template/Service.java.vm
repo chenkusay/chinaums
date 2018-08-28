@@ -1,0 +1,26 @@
+package ${package}.service;
+
+
+import com.gizhi.base.service.BaseService;
+import ${package}.dao.${className}Dao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ */
+@Service
+@Transactional(readOnly = true)
+public class ${className}Service extends BaseService {
+
+    @Autowired
+    private ${className}Dao dao;
+
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    public void deleteBatch(String ${pk.attrname}s){
+		dao.deleteBatch(${pk.attrname}s);
+	}
+}

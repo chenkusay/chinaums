@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 配置全局属性 -->
+	<settings>
+		<!-- 使全局的映射器启用或禁用缓存。 default:true-->
+		<setting name="cacheEnabled" value="true"/>
+
+		<!-- 延迟加载的全局开关。当禁用时，所有关联对象都会即时加载。 特定关联关系中可通过设置fetchType属性来覆盖该项的开关状态。 default:false-->
+		<setting name="lazyLoadingEnabled" value="true"/>
+
+		<!-- 当启用时，有延迟加载属性的对象在被调用时将会完全加载任意属性。否则，每种属性将会按需要加载。default:true -->
+		<setting name="aggressiveLazyLoading" value="true"/>
+
+		<!-- 是否允许单条sql 返回多个数据集  (取决于驱动的兼容性) default:true -->
+		<setting name="multipleResultSetsEnabled" value="true"/>
+
+		<!-- 是否可以使用列的别名 (取决于驱动的兼容性) default:true -->
+		<setting name="useColumnLabel" value="true"/>
+
+		<!-- 允许JDBC 生成主键。需要驱动器支持。如果设为了true，这个设置将强制使用被生成的主键，有一些驱动器不兼容不过仍然可以执行。  default:false  -->
+		<setting name="useGeneratedKeys" value="false"/>
+
+		<!-- 指定 MyBatis 如何自动映射 数据基表的列 NONE：不隐射　PARTIAL:部分  FULL:全部  -->
+		<setting name="autoMappingBehavior" value="PARTIAL"/>
+
+		<!-- 这是默认的执行类型（SIMPLE: 简单； REUSE: 执行器可能重复使用prepared statements语句；BATCH: 执行器可以重复执行语句和批量更新）  -->
+		<setting name="defaultExecutorType" value="SIMPLE"/>
+
+		<!-- 开启驼峰命名转换 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+
+		<!-- 设置本地缓存范围 session:就会有数据的共享  statement:语句范围 (这样就不会有数据的共享 ) defalut:session -->
+		<setting name="localCacheScope" value="SESSION"/>
+
+		<!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default:OTHER，插入空值时不需要指定类型 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+
+		<!-- 指定当结果集中值为 null 的时候是否调用映射对象的 setter（map 对象时为 put）方法，这对于有 Map.keySet() 依赖或 null 值初始化的时候是有用的。注意基本类型（int、boolean等）是不能设置成 null 的 default:true-->
+		<setting name="callSettersOnNulls" value="true"/>
+
+		<!-- 指定 MyBatis 所用日志的具体实现，未指定时将自动查找。 -->
+		<setting name="logImpl" value="LOG4J"/>
+	</settings>
+
+	<!--类型别名是为 Java 类型设置一个短的名字。它只和 XML 配置有关，存在的意义仅在于用来减少类完全限定名的冗余。
+        也可以指定一个包名，MyBatis 会在包名下面搜索需要的 Java Bean.
+        每一个在包中的 Java Bean，在没有注解的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。若有注解，则别名为其注解值-->
+	<typeAliases>
+		<package name="com.chinaums.*.entity"/>
+	</typeAliases>
+
+	<!--插件配置-->
+	<plugins>
+		<plugin interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
+			<property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect" />
+		</plugin>
+	</plugins>
+</configuration>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fhl.dao.SysRoleDao">
+
+    <sql id="Base_Column_List">
+		            a.`id` AS "id", 
+		            a.`role_name` AS "roleName", 
+		            a.`role_remark` AS "roleRemark", 
+		            a.`create_time` AS "createTime"
+		    </sql>
+
+    <select id="getList" resultType="SysRole">
+        select
+          <include refid="Base_Column_List"/>
+        from sys_role a
+        <where>
+                            <if test="id != null">
+                    and a.`id` = #{id}
+                </if>
+                            <if test="roleName != null">
+                    and a.`role_name` = #{roleName}
+                </if>
+                            <if test="roleRemark != null">
+                    and a.`role_remark` = #{roleRemark}
+                </if>
+                            <if test="createTime != null">
+                    and a.`create_time` = #{createTime}
+                </if>
+                    </where>
+    </select>
+    <select id="getTreeList" resultType="java.util.HashMap">
+        SELECT
+            CONCAT(a.`id`,'') AS "id",
+            a.`role_name` AS "name"
+        from sys_role a
+    </select>
+    <!-- 级联删除 -->
+    <delete id="deleteBatch">
+        delete from sys_role where find_in_set(id, #{ids});
+    </delete>
+
+</mapper>

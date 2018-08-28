@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fhl.dao.SysRoleUserDao">
+
+    <sql id="Base_Column_List">
+		            a.`id` AS "id", 
+		            a.`role_id` AS "roleId", 
+		            a.`user_id` AS "userId", 
+		            a.`create_time` AS "createTime", 
+		            a.`update_time` AS "updateTime"
+		    </sql>
+
+    <select id="getList" resultType="SysRoleUser">
+        select
+          <include refid="Base_Column_List"/>
+        from sys_role_user a
+        <where>
+                            <if test="id != null">
+                    and a.`id` = #{id}
+                </if>
+                            <if test="roleId != null">
+                    and a.`role_id` = #{roleId}
+                </if>
+                            <if test="userId != null">
+                    and a.`user_id` = #{userId}
+                </if>
+                            <if test="createTime != null">
+                    and a.`create_time` = #{createTime}
+                </if>
+                            <if test="updateTime != null">
+                    and a.`update_time` = #{updateTime}
+                </if>
+                    </where>
+    </select>
+
+    <!-- 级联删除 -->
+    <delete id="deleteBatch">
+        delete from sys_role_user where find_in_set(id, #{ids});
+    </delete>
+
+</mapper>

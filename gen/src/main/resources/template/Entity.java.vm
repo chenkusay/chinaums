@@ -1,0 +1,30 @@
+package ${package}.entity;
+
+import com.gizhi.base.entity.BaseEntity;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
+import java.util.Date;
+
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ */
+@Data
+@NoArgsConstructor
+public class ${className} extends BaseEntity {
+
+#foreach ($column in $columns)
+	// $column.comments
+	#if($column.attrType == "Long")
+    @JSONField(serializeUsing = ToStringSerializer.class)
+	#end
+	private $column.attrType $column.attrname;
+#end
+}

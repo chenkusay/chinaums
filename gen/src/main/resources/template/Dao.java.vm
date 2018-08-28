@@ -1,0 +1,17 @@
+package ${package}.dao;
+
+import com.gizhi.base.dao.BaseDao;
+import ${package}.entity.${className};
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ */
+@Repository
+public interface ${className}Dao extends BaseDao<${className}> {
+
+    void deleteBatch(@Param("${pk.attrname}s") String ${pk.attrname}s);
+}
