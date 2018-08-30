@@ -1,0 +1,15 @@
+
+<div class="box-footer clearfix">
+    <div class="pull-right" style="line-height: 30px;margin-left:10px;">共{{page.totalPages}}页，{{page.totalRows}}条记录</div>
+    <ul class="pagination pagination-sm no-margin pull-right">
+        <li v-show="page.pageNo != 1" :data-id="1">
+            <a  href="javascript:;">首页</a>
+        </li>
+        <li v-show="page.pageNo != 1" :data-id="page.pageNo-1"><a href="javascript:;">上一页</a></li>
+        <li v-if="page.totalPages>1" :data-id="index" v-for="index in page.totalPages" :class="{'active':page.pageNo == index}" :key="index">
+            <a href="javascript:;">{{index}}</a>
+        </li>
+        <li v-show="page.totalPages != page.pageNo && page.totalPages > 0" :data-id="page.pageNo+1"><a href="javascript:;">下一页</a></li>
+        <li v-show="page.totalPages != page.pageNo && page.totalPages > 0" :data-id="page.totalPages"><a href="javascript:;">尾页</a></li>
+    </ul>
+</div>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>消费会员升级套餐配置</title>
+	#parse("common/_header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<!--<div class="col-sm-2 control-label">套餐缩略图</div>-->
+			<!--<div class="col-sm-10">-->
+				<!--<img v-show="goods.thumb != null" style="margin-top: 5px;width: 100px;height: 100px" :src="goods.thumb" width="150" />-->
+				<!--<div class="btn btn-primary" @click="choosePic">上传图片</div>-->
+				<!--&lt;!&ndash;<div class="help-block">推荐700*1050像素</div>&ndash;&gt;-->
+			<!--</div>-->
+			<div class="form-group">
+				<!--<div class="col-sm-10">-->
+				<div class="col-sm-2 control-label">套餐封面图<div class="help-block">(推荐750*400像素)</div></div>
+				<div class="col-sm-10">
+					<img v-show="goods.thumb != null" style="margin-top: 5px;width: 100px;height: 100px" :src="goods.thumb" width="150" @click="choosePic(0,1)"/>
+					<img src="${rc.contextPath}/statics/images/btn_upload.png" style="margin-top: 5px;width: 100px" @click="choosePic(-1,1)"/>
+				</div>
+				<!--</div>-->
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">套餐主图<div class="help-block">(推荐750*750像素)</div></div>
+				<div class="col-sm-10">
+					<div v-for="(pic,idx) in goods.masterPics" style="display: inline-block;float: left;overflow: hidden;width: 100px;margin-right:10px">
+						<img :key="pic" :src="pic" style="margin-top: 5px;width: 100px;height: 100px" @click="choosePic(idx)"/>
+						<div class="help-block" style="text-align: center;cursor: pointer;" @click="delPicItem(idx)">删除</div>
+					</div>
+					<!--<div class="btn btn-primary" @click="choosePic">上传图片</div>-->
+					<img src="${rc.contextPath}/statics/images/btn_upload.png" style="margin-top: 5px;width: 100px" @click="choosePic(-1,2)"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">套餐名称</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="goods.name" placeholder="套餐名称"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<!--<div class="col-sm-2 control-label">套餐编号</div>-->
+				<!--<div class="col-sm-10">-->
+					<!--<input type="text" class="form-control" v-model="goods.goodsSn" placeholder="套餐编号"/>-->
+				<!--</div>-->
+			</div>
+			<!--<div class="form-group">-->
+			<!--<div class="col-sm-2 control-label">套餐缩略图</div>-->
+			<!--<div class="col-sm-10">-->
+			<!--<input type="text" class="form-control" v-model="goods.thumb" placeholder="套餐缩略图"/>-->
+			<!--</div>-->
+			<!--</div>-->
+			<!--<div class="form-group">-->
+			<!--<div class="col-sm-2 control-label">套餐视频地址</div>-->
+			<!--<div class="col-sm-10">-->
+			<!--<input type="text" class="form-control" v-model="goods.video" placeholder="套餐视频地址"/>-->
+			<!--</div>-->
+			<!--</div>-->
+			<!--<div class="form-group">-->
+			<!--<div class="col-sm-2 control-label">套餐描述</div>-->
+			<!--<div class="col-sm-10">-->
+			<!--<input type="text" class="form-control" v-model="goods.brief" placeholder="套餐描述"/>-->
+			<!--</div>-->
+			<!--</div>-->
+			<div class="form-group">
+				<div class="col-sm-2 control-label">套餐备注</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="goods.sellerNote" placeholder="套餐备注，仅商家可看"/>
+				</div>
+			</div>
+			<!--<div class="form-group">-->
+				<!--<div class="col-sm-2 control-label">进价</div>-->
+				<!--<div class="col-sm-10">-->
+					<!--<input type="text" class="form-control" v-model="goods.purchasePrice" placeholder="进价"/>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--<div class="form-group">-->
+				<!--<div class="col-sm-2 control-label">市场价</div>-->
+				<!--<div class="col-sm-10">-->
+					<!--<input type="text" class="form-control" v-model="goods.marketPrice" placeholder="市场价"/>-->
+				<!--</div>-->
+			<!--</div>-->
+			<div class="form-group">
+				<div class="col-sm-2 control-label">售价</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="goods.price" placeholder="售价"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">优惠金额</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="goods.discountPoint" placeholder="折扣点数,不能低于8折"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">优惠开始时间</div>
+				<div class="col-sm-10">
+					<input type="text" id="startTime" class="form-control" v-model="goods.startTime" placeholder="打折开始时间"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">优惠结束时间</div>
+				<div class="col-sm-10">
+					<input type="text" id="endTime" class="form-control" v-model="goods.endTime" placeholder="打折结束时间"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">套餐基础销量</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="goods.salesNum" placeholder="套餐销量基数"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">套餐详情</div>
+				<div class="col-sm-10">
+					<div  id="myEditor" style="width:100%;height:200px;"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div>
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="保存"/>
+			</div>
+		</form>
+	</div>
+
+	<!-- 图片弹窗 -->
+	<div class="modal fade in" id="upFilePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">上传图片</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<div class="col-sm-2 control-label">图片网址</div>
+							<div class="col-sm-10" style="display: flex;">
+								<input class="form-control" v-model="uploadPic.pic" @keyup.enter="getNetPic" style="margin-right:10px;"/>
+								<div class="btn btn-primary" @click="getNetPic">提取</div>
+							</div>
+							<div v-if="errors.pic&&errors.pic!=''" class="help-block">图片地址有误</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 control-label">本地图片</div>
+							<div class="col-sm-8">
+								<input type="file" id="uploadFile" accept="image/jpeg, image/png" class="form-control" placeholder="图片" style="display: none;"/>
+								<img :src="uploadPic.baseimg==null?'/statics/images/add_pic.png':uploadPic.baseimg" width="150" @click="$('#uploadFile').click()">
+								<div class="c959595" style="margin-top:8px;font-size: 15px" v-if="uploadPic.type==2">建议大小750X750像素</div>
+								<div class="c959595" style="margin-top:8px;font-size: 15px" v-else>建议大小690X300像素</div>
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 百度编辑器 -->
+<script type="text/javascript" charset="utf-8" src="${rc.contextPath}/statics/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${rc.contextPath}/statics/plugins/ueditor/ueditor.all.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${rc.contextPath}/statics/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="${rc.contextPath}/statics/plugins/laydate/laydate.js"></script>
+<script src="${rc.contextPath}/statics/js/sys/system/goodsmemberupgrades.js?_${date.systemTime}"></script>
+</body>
+</html>

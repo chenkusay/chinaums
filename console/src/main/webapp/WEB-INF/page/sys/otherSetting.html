@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>其它设置</title>
+    #parse("common/_header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">电话</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="configlist[0].value" />
+            </div>
+        </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">售后说明</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="configlist[1].value" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">重消打折点数</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="configlist[2].value" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">分红条件直推人数</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="configlist[3].value.spreadNum" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">分红条件重消金额</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="configlist[3].value.consumeNum" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">免费会员销售提成百分比</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="configlist[4].value[0].spread" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">免费会员广告提成百分比</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="configlist[4].value[0].manage" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">消费会员销售提成百分比</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="configlist[4].value[1].spread" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">消费会员广告提成百分比</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="configlist[4].value[1].manage" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="save" value="保存"/>
+            </div>
+    </form>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8" src="${rc.contextPath}/statics/plugins/laydate/laydate.js"></script>
+<script src="${rc.contextPath}/statics/js/sys/system/otherSetting.js?_${date.systemTime}"></script>
+
+</body>
+</html>

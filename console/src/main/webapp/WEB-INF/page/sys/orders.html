@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>订单表</title>
+#parse("common/_header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.orderNo" @keyup.enter="query" placeholder="订单号">
+			</div>
+
+            <div class="form-group col-sm-2">
+                <input type="text" class="form-control" v-model="q.phone" @keyup.enter="query" placeholder="收货人电话">
+            </div>
+			<div class="form-group col-sm-2" style="width: 20%">
+				<select id="orderStatus" class="form-control" v-model="q.orderStatus" style="width: 100%">
+					<option value="0" selected="selected">全部订单</option>
+					<option value="1">待付款</option>
+					<option value="2">已付款</option>
+					<option value="3">待收货</option>
+					<option value="4">已完成</option>
+					<option value="5">已评价</option>
+					<option value="6">已关闭</option>
+				</select>
+			</div>
+			<div class="form-group col-sm-2" style="float: none; display: flex;width: 30%">
+				<input type="text" id="qkey" class="form-control" v-model="q.key" @keyup.enter="query" placeholder="时间段">
+				&nbsp;<a class="btn btn-default" @click="query">查询</a>
+			</div>
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+	<div v-show="showDeliver" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-2 control-label">快递公司</div>
+				<div class="col-sm-10">
+					<ul id="companyTree" class="ztree"></ul>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">快递单号</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="orders.deliveryNo" placeholder="快递单号"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div>
+				<input type="button" class="btn btn-primary" @click="saveDeliver" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>
+    <div v-show="showDetail" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">订单号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.orderNo" placeholder="订单号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">订单状态</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="orders.status" placeholder="订单状态"/>
+				</div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">会员编号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.memberId" placeholder="会员编号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">原总价</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.totalPrice" placeholder="原总价"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">折扣点数</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.discountPoint" placeholder="折扣点数"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">折后价格</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.discountPrice" placeholder="折后价格"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">支付价格</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.price" placeholder="支付价格"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">收货人</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.username" placeholder="收货人"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">联系电话</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.phone" placeholder="联系电话"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">收货地址</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.address" placeholder="收货地址"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">买家留言</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.message" placeholder="买家留言"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">下单时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.orderTime" placeholder="下单时间"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">支付方式</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.payWay" placeholder="支付方式"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">支付流水号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.payNo" placeholder="支付流水号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">支付时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.payTime" placeholder="支付时间"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">发货时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.deliveryTime" placeholder="发货时间"/>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">快递单号</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="orders.deliveryNo" placeholder="快递单号"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">快递公司名称</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="orders.deliveryWayName" placeholder="快递公司名称"/>
+				</div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">完成时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.finishTime" placeholder="完成时间"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">评论时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.commentTime" placeholder="评论时间"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">退款单号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.refundNo" placeholder="退款单号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">退款时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.refundTime" placeholder="退款时间"/>
+			    </div>
+			</div>
+
+
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">订单关闭时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.cancelTime" placeholder="订单关闭时间"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">商家备注</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.remark" placeholder="商家备注"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">退款金额</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.refundAmount" placeholder="退款金额"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">退款原因</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.refundReason" placeholder="退款原因"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">关闭原因</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.cancelReason" placeholder="关闭原因"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">是否已评价</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="orders.isComment" placeholder="是否已评价过"/>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript" charset="utf-8" src="${rc.contextPath}/statics/plugins/laydate/laydate.js"></script>
+<script src="${rc.contextPath}/statics/js/sys/system/orders.js?_${date.systemTime}"></script>
+</body>
+</html>

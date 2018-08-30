@@ -1,0 +1,44 @@
+<!-- cdn服务: http://www.bootcdn.cn/ -->
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="${rc.contextPath}/statics/libs/jquery.min.js"></script>
+
+<!-- Bootstrap 核心 JavaScript 文件 -->
+<script src="${rc.contextPath}/statics/libs/bootstrap.min.js"></script>
+
+<!-- jquery-cookie -->
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+<!-- AdminLTE App -->
+<script src="${rc.contextPath}/statics/plugins/AdminLTE/js/app.min.js"></script>
+
+<!-- plugins -->
+<script src="${rc.contextPath}/statics/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="${rc.contextPath}/statics/plugins/cxselect/jquery.cxselect.min.js"></script>
+
+<!-- layer -->
+<link href="//cdn.bootcss.com/layer/3.0.1/skin/default/layer.min.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+<script src="${rc.contextPath}/statics/plugins/laydate/laydate.js"></script>
+
+<!-- vue -->
+<script src="${rc.contextPath}/statics/libs/vue.min.js"></script>
+
+
+<!-- 自定义通用脚本 -->
+<script src="${rc.contextPath}/statics/js/common.js"></script>
+<script src="${rc.contextPath}/statics/js/_header.js?_${date.systemTime}"></script>
+<script src="${rc.contextPath}/statics/js/_sidebar.js?_${date.systemTime}"></script>
+
+
+<script>
+    //全局配置
+    $.ajaxSetup({
+        dataType: "json",
+        contentType: "application/json",
+        cache: false
+    });
+</script>
