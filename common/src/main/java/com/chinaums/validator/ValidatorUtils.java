@@ -1,7 +1,7 @@
 package com.chinaums.validator;
 
 
-import com.fhl.utils.RRException;
+import com.chinaums.utils.RRException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

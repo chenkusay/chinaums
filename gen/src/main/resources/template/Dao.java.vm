@@ -1,6 +1,6 @@
 package ${package}.dao;
 
-import com.gizhi.base.dao.BaseDao;
+import com.chinaums.base.dao.BaseDao;
 import ${package}.entity.${className};
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

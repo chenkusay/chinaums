@@ -1,6 +1,6 @@
 package com.chinaums.oss;
 
-import com.gizhi.validator.group.QiniuGroup;
+import com.chinaums.validator.group.QiniuGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;

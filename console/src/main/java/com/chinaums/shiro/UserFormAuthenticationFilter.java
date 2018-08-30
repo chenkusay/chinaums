@@ -1,7 +1,7 @@
 package com.chinaums.shiro;
 
 import com.alibaba.fastjson.JSON;
-import com.fhl.utils.R;
+import com.chinaums.utils.R;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by liqian on 2018/2/1.
+ * Created by cxq on 2018/2/1.
  */
 public class UserFormAuthenticationFilter extends FormAuthenticationFilter {
 

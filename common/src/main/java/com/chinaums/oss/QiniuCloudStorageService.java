@@ -1,6 +1,6 @@
 package com.chinaums.oss;
 
-import com.gizhi.utils.RRException;
+import com.chinaums.utils.RRException;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;

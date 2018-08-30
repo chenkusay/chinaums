@@ -1,6 +1,6 @@
 package com.chinaums.oss;
 
-import com.gizhi.utils.DateUtils;
+import com.chinaums.utils.DateUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;

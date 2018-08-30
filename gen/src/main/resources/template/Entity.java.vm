@@ -1,6 +1,6 @@
 package ${package}.entity;
 
-import com.gizhi.base.entity.BaseEntity;
+import com.chinaums.base.entity.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.alibaba.fastjson.annotation.JSONField;

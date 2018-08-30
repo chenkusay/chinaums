@@ -58,8 +58,8 @@
 	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
 		<property name="patterns">
 			<list>
-				<value>com.gizhi.*.controller.*</value>
-				<value>com.gizhi.*.service.*</value>
+				<value>com.chinaums.*.controller.*</value>
+				<value>com.chinaums.*.service.*</value>
 			</list>
 		</property>
 	</bean>
@@ -76,18 +76,18 @@
 	<!-- 基于注解的声明式事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<bean id="sqlSessionFactory" class="com.gizhi.utils.PackagesSqlSessionFactoryBean">
+	<bean id="sqlSessionFactory" class="com.chinaums.utils.PackagesSqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 配置Mybatis全局配置文件 -->
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<!-- 扫描entity包 使用别名 -->
-		<property name="typeAliasesPackage" value="com.gizhi.*.entity" />
+		<property name="typeAliasesPackage" value="com.chinaums.*.entity" />
 		<!-- 扫描sql配置文件:mapper配置xml文件 -->
 		<property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
 	</bean>
 
 	<!-- 配置扫描dao接口包,动态实现Dao接口,注入到spring容器中 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.gizhi.*.dao"/>
+		<property name="basePackage" value="com.chinaums.*.dao"/>
 	</bean>
 </beans>
