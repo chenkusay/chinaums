@@ -38,6 +38,9 @@ public class SysUser extends BaseEntity {
 	@NotBlank(message="密码不能为空", groups = AddGroup.class)
 	private transient String password;
 
+
+	private Integer userType;
+
 	/**
 	 * 邮箱
 	 */

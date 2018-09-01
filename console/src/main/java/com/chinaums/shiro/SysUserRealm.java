@@ -1,6 +1,7 @@
 package com.chinaums.shiro;
 
 
+import com.chinaums.common.Const;
 import com.chinaums.sys.entity.SysMenu;
 import com.chinaums.sys.entity.SysUser;
 import com.chinaums.sys.service.SysMenuService;
@@ -87,12 +88,16 @@ public class SysUserRealm extends AuthorizingRealm {
         if(!password.equals(user.getPassword())) {
             throw new IncorrectCredentialsException("账号或密码不正确");
         }
-        
+
+        if (user.getUserType() == null || user.getUserType().equals(Const.DEFAULT_ROLE.OWNER_ADMIN_ID) || user.getUserType().equals(Const.DEFAULT_ROLE.COMMUNITY_ADMIN_ID)) {
+            throw new AuthenticationException("账户没权限登录");
+        }
+
         //账号锁定
         if(user.getFrozen() == 0){
         	throw new LockedAccountException("账号已被锁定,请联系管理员");
         }
-        
+
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
         return info;
 	}
