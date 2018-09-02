@@ -68,6 +68,7 @@
 				/logout=logout
 	        	/sys/login=anon
 	        	/captcha.jpg=anon
+				/regist/*=anon
 	        	/**=authc
 	        </value>
 	    </property>
